@@ -57,6 +57,8 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\RestoreAction::make(), 
+                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('Verify')
                 ->icon('heroicon-m-check-badge')
                 ->action(function (User $user){
@@ -70,9 +72,14 @@ class UserResource extends Resource
                     $user->save();
                 }),
             ])
+            ->filters([
+                //
+                Tables\Filters\TrashedFilter::make(),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }

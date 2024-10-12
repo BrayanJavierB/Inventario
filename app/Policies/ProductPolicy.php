@@ -14,7 +14,7 @@ class ProductPolicy
     public function viewAny(User $user): bool
     {
         //
-        return $user->hasRole(['Almacen', 'Admin']);
+        return $user->hasRole(['Almacen', 'Admin', 'SuperAdmin']);
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductPolicy
     public function view(User $user, Product $product): bool
     {
         //
-        return $user->hasRole(['Almacen', 'Admin']);
+        return $user->hasRole(['Almacen', 'Admin', 'SuperAdmin']);
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductPolicy
     public function create(User $user): bool
     {
         //
-        return $user->hasRole(['Almacen', 'Admin']);
+        return $user->hasRole(['Almacen', 'Admin', 'SuperAdmin']);
     }
 
     /**

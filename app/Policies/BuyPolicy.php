@@ -2,19 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Buy;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Models\Buy;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class BuyPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('view_any_buy');
     }
 
     /**
@@ -22,8 +23,7 @@ class BuyPolicy
      */
     public function view(User $user, Buy $buy): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('view_buy');
     }
 
     /**
@@ -31,8 +31,7 @@ class BuyPolicy
      */
     public function create(User $user): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('create_buy');
     }
 
     /**
@@ -40,8 +39,7 @@ class BuyPolicy
      */
     public function update(User $user, Buy $buy): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('update_buy');
     }
 
     /**
@@ -49,25 +47,62 @@ class BuyPolicy
      */
     public function delete(User $user, Buy $buy): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('delete_buy');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Buy $buy): bool
+    public function deleteAny(User $user): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('delete_any_buy');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Buy $buy): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Compras']);
+        return $user->can('force_delete_buy');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_buy');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Buy $buy): bool
+    {
+        return $user->can('restore_buy');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_buy');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Buy $buy): bool
+    {
+        return $user->can('replicate_buy');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_buy');
     }
 }

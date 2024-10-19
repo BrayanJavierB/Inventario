@@ -2,19 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Customer;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Models\Customer;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CustomerPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('view_any_customer');
     }
 
     /**
@@ -22,8 +23,7 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('view_customer');
     }
 
     /**
@@ -31,8 +31,7 @@ class CustomerPolicy
      */
     public function create(User $user): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('create_customer');
     }
 
     /**
@@ -40,8 +39,7 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('update_customer');
     }
 
     /**
@@ -49,25 +47,62 @@ class CustomerPolicy
      */
     public function delete(User $user, Customer $customer): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('delete_customer');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Customer $customer): bool
+    public function deleteAny(User $user): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('delete_any_customer');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Customer $customer): bool
     {
-        //
-        return $user->hasRole(roles: ['Admin', 'SuperAdmin', 'Ventas']);
+        return $user->can('force_delete_customer');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_customer');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Customer $customer): bool
+    {
+        return $user->can('restore_customer');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_customer');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Customer $customer): bool
+    {
+        return $user->can('replicate_customer');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_customer');
     }
 }
